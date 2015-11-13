@@ -30,6 +30,7 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'sukima/xmledit'
 Bundle 'kien/ctrlp.vim'
 Bundle 'bling/vim-airline'
+Plugin 'vim-scripts/DeleteTrailingWhitespace'
 
 call vundle#end()
 
@@ -165,3 +166,7 @@ nnoremap <leader>c :bp\|:bd #<CR>
 autocmd Filetype yaml setlocal et ts=2 sw=2 sts=2
 
 autocmd FileType javascript setlocal et ts=2 sw=2 sts=2
+
+" DeleteTrailingWhitespace
+let g:DeleteTrailingWhitespace = 1
+let g:DeleteTrailingWhitespace_Action = 'delete'
