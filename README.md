@@ -1,4 +1,4 @@
-# dotfiles
+# vim and git configuration
 This repo contains some dotfiles to ease the process of having a known
 environment wherever I go.
 
