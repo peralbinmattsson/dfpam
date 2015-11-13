@@ -1,0 +1,168 @@
+set nocompatible
+filetype off
+
+" from http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/
+let iCanHazVundle=1
+let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
+if !filereadable(vundle_readme)
+    echo "Installing Vundle.."
+    echo ""
+    silent !mkdir -p ~/.vim/bundle
+    silent !git clone https://github.com/gmarik/Vundle.vim ~/.vim/bundle/Vundle.vim
+    let iCanHazVundle=0
+endif
+
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
+
+Bundle 'gmarik/Vundle.vim'
+
+Bundle 'cschlueter/vim-wombat'
+Bundle 'fholgado/minibufexpl.vim'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-repeat'
+Bundle 'tristen/vim-sparkup'
+Bundle 'StanAngeloff/php.vim'
+Bundle 'groenewege/vim-less'
+Bundle 'Glench/Vim-Jinja2-Syntax'
+Bundle 'scrooloose/nerdtree'
+Bundle 'sukima/xmledit'
+Bundle 'kien/ctrlp.vim'
+Bundle 'bling/vim-airline'
+Bundle 'Valloric/YouCompleteMe'
+
+call vundle#end()
+
+if iCanHazVundle == 0
+    echo "Installing Bundles, please ignore key map error messages"
+    echo ""
+    :PluginInstall
+endif
+
+" NERDTree
+nmap <silent> <F3> :NERDTreeToggle<CR>
+
+" set leader
+let mapleader = ","
+
+
+" minibufexpl
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+nnoremap <C-PageUp> :bprevious!<CR>
+nnoremap <C-PageDown> :bnext!<CR>
+
+" vim-sparkup double quotes
+let g:sparkupDoubleQuote = 1
+
+" Fix ZZ
+nnoremap ZZ :wqall<CR>
+
+syntax on
+filetype plugin indent on
+
+set cursorline
+set number
+set ruler
+set title
+set nowrap
+set nobackup
+set showcmd
+set scrolloff=3
+
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+
+set showmatch
+set incsearch
+set hlsearch
+
+set visualbell t_vb=
+set novisualbell
+set autoindent
+if exists('+colorcolumn')
+    set colorcolumn=100
+endif
+
+
+" For airline
+let g:airline_powerline_fonts = 1
+let g:airline_theme = "powerlineish"
+set laststatus=2
+set encoding=utf-8
+" N / I instead of NORMAL / INSERT
+let g:airline_mode_map = {
+      \ '__' : '--',
+      \ 'n' : 'N',
+      \ 'i' : 'I',
+      \ 'R' : 'REPLACE',
+      \ 'c' : 'COMMAND',
+      \ 'v' : 'VISUAL',
+      \ 'V' : 'V-LINE',
+      \ '^V' : 'V-BLOCK',
+      \ 's' : 'SELECT',
+      \ 'S' : 'S-LINE',
+      \ '^S' : 'S-BLOCK',
+\ }
+
+augroup vimrcs
+    au!
+    au bufwritepost ~/.vimrc
+	\ source ~/.vimrc |
+	\ if exists('g:Powerline_loaded') |
+	\ silent! call Pl#Load() |
+	\ endif
+augroup END
+
+set backspace=eol,indent,start
+
+" Window size
+if has("gui_running")
+    " GUI is running or is about to start.
+    " Set size.
+    set lines=50 columns=160
+    set gfn=Ubuntu\ Mono\ derivative\ Powerline\ 12
+    colorscheme wombat
+else
+    " This is console Vim.
+    set t_Co=256
+    colorscheme wombat256
+    set timeoutlen=100
+endif
+if $TERM =~ '^screen-256color'
+    execute "set <xUp>=\e[1;*A"
+    execute "set <xDown>=\e[1;*B"
+    execute "set <xRight>=\e[1;*C"
+    execute "set <xLeft>=\e[1;*D"
+    map <Esc>OH <Home>
+    map! <Esc>OH <Home>
+    map <Esc>OF <End>
+    map! <Esc>OF <End>
+    map <Esc>[5;5~ <C-PageUp>
+    map! <Esc>[5;5~ <C-PageUp>
+    map <Esc>[6;5~ <C-PageDown>
+    map! <Esc>[6;5~ <C-PageDown>
+endif
+
+" Better pasting in terminal vim from
+" http://userobsessed.net/tips-and-tricks/2011/05/10/copy-and-paste-in-vim/
+imap <Leader>v  <C-O>:set paste<CR><C-r>*<C-O>:set nopaste<CR>
+
+" Remember foldings and cursor position
+au BufWinLeave * silent! mkview
+au BufWinEnter * silent! loadview
+
+" Command-T
+set wildignore=.git,*/node_modules/*,*.pyc,*.png,*.jpg,venv/*
+nnoremap <C-t> :<C-u>CtrlP<CR>
+
+" close buffer
+nnoremap <leader>c :bp\|:bd #<CR>
+
+" filetype specific settings
+autocmd Filetype yaml setlocal et ts=2 sw=2 sts=2
+
+autocmd FileType javascript setlocal et ts=2 sw=2 sts=2

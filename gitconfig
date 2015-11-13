@@ -1,0 +1,17 @@
+[user]
+	name = PAM
+	email = peralbin@ponty.se
+[color]
+	ui = auto
+[alias]
+	vlog = log --graph --date-order --date=relative --pretty=format:\"%c(white)%h: %cgreen - %an - %cred %c(cyan)%ar:[b%creset%n%s%n\" --color
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[giggle]
+	main-window-maximized = true
+	main-window-geometry = 700x550+498+1341
+	show-graph = true
+[push]
+	default = simple
